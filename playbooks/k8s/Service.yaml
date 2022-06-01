@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: wordle-solver-service
+  namespace: {{ namespace }}
+spec:
+  selector:
+    app: wordle-solver
+    branch: {{ git_branch }}
+  ports:
+    - name: http4s-port
+      port: 8000

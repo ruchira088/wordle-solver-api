@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: wordle-solver-certificate
+  namespace: {{ namespace }}
+spec:
+  secretName: wordle-solver-tls
+  issuerRef:
+    kind: ClusterIssuer
+    name: lets-encrypt
+  dnsNames:
+    - {{ hostname }}
