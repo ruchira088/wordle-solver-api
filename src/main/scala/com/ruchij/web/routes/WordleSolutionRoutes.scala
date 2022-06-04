@@ -26,9 +26,7 @@ object WordleSolutionRoutes {
               wordleConstraintsRequest.inPosition.getOrElse(Map.empty)
             )
           }
-          .flatMap { solutions =>
-            Ok(WordleSolutionResponse(solutions))
-          }
+          .flatMap { solutions => Ok(WordleSolutionResponse(solutions)) }
     }
   }
 }

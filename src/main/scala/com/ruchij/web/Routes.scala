@@ -7,7 +7,7 @@ import com.ruchij.web.middleware.{ExceptionHandler, NotFoundHandler}
 import com.ruchij.web.routes.{HealthRoutes, WordleSolutionRoutes}
 import org.http4s.dsl.Http4sDsl
 import org.http4s.server.Router
-import org.http4s.server.middleware.GZip
+import org.http4s.server.middleware.{CORS, GZip}
 import org.http4s.{HttpApp, HttpRoutes}
 
 object Routes {
@@ -21,8 +21,10 @@ object Routes {
       )
 
     GZip {
-      ExceptionHandler {
-        NotFoundHandler(routes)
+      CORS.policy {
+        ExceptionHandler {
+          NotFoundHandler(routes)
+        }
       }
     }
   }

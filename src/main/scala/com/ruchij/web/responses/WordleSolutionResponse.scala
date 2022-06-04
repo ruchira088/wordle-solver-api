@@ -1,3 +1,5 @@
 package com.ruchij.web.responses
 
-case class WordleSolutionResponse(solutions: Seq[String])
+import com.ruchij.services.solver.models.PossibleSolution
+
+case class WordleSolutionResponse(solutions: Seq[PossibleSolution])

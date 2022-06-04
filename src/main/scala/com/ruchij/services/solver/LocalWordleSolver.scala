@@ -2,7 +2,7 @@ package com.ruchij.services.solver
 
 import cats.Applicative
 import com.ruchij.services.solver.LocalWordleSolver.characterCounts
-import com.ruchij.services.solver.models.Trie
+import com.ruchij.services.solver.models.PossibleSolution
 
 class LocalWordleSolver[F[_]: Applicative](wordsList: Seq[String]) extends WordleSolver[F] {
 
@@ -11,16 +11,31 @@ class LocalWordleSolver[F[_]: Applicative](wordsList: Seq[String]) extends Wordl
     excludedChars: Set[Char],
     notInPosition: Map[Int, Set[Char]],
     inPosition: Map[Int, Char]
-  ): F[Seq[String]] = {
+  ): F[Seq[PossibleSolution]] = {
     val words: Seq[String] = solutions(length, excludedChars, notInPosition, inPosition)
+    val (results, max): (Map[String, Int], Int) = calculateScores(words, characterCounts(words))
 
-    val chars: Seq[Char] =
-      characterCounts(words).toSeq
-        .sortBy { case (_, count) => -count }
-        .map { case (char, _) => char }
-
-    ???
+    Applicative[F].pure {
+      results.toList
+        .sortBy { case (word, score) => (-score, word) }
+        .take(20)
+        .map { case (word, score) => PossibleSolution(word, score * 100 / max) }
+    }
   }
+
+  private def calculateScores(words: Seq[String], chars: Map[Char, Int]): (Map[String, Int], Int) =
+    words.foldLeft((Map.empty[String, Int], 0)) {
+      case ((acc, max), word) =>
+        val (_, sum) =
+          word.toList.foldLeft((chars, 0)) {
+            case (current @ (currentChars, currentSum), char) =>
+              currentChars.get(char)
+                .map { count => (currentChars ++ Map(char -> count / 2), currentSum + count) }
+                .getOrElse(current)
+          }
+
+        acc ++ Map(word -> sum) -> Math.max(max, sum)
+    }
 
   private def solutions(
     length: Int,
@@ -43,8 +58,6 @@ class LocalWordleSolver[F[_]: Applicative](wordsList: Seq[String]) extends Wordl
         }
       }
 
-
-
 }
 
 object LocalWordleSolver {
@@ -55,6 +68,4 @@ object LocalWordleSolver {
           case (result, char) => result + (char -> (result.getOrElse(char, 0) + 1))
         }
     }
-
-  private def buildTrie(words: List[String]): Trie[String] = ???
 }
