@@ -8,6 +8,7 @@ class LocalWordleSolver[F[_]: Applicative](wordsList: Seq[String]) extends Wordl
 
   override def possibleSolutions(
     length: Int,
+    limit: Int,
     excludedChars: Set[Char],
     notInPosition: Map[Int, Set[Char]],
     inPosition: Map[Int, Char]
@@ -18,7 +19,7 @@ class LocalWordleSolver[F[_]: Applicative](wordsList: Seq[String]) extends Wordl
     Applicative[F].pure {
       results.toList
         .sortBy { case (word, score) => (-score, word) }
-        .take(20)
+        .take(limit)
         .map { case (word, score) => PossibleSolution(word, score * 100 / max) }
     }
   }
@@ -30,7 +31,7 @@ class LocalWordleSolver[F[_]: Applicative](wordsList: Seq[String]) extends Wordl
           word.toList.foldLeft((chars, 0)) {
             case (current @ (currentChars, currentSum), char) =>
               currentChars.get(char)
-                .map { count => (currentChars ++ Map(char -> count / 2), currentSum + count) }
+                .map { count => (currentChars ++ Map(char -> Math.max(1, count / 10)), currentSum + count) }
                 .getOrElse(current)
           }
 

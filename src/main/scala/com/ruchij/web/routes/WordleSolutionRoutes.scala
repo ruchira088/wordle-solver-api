@@ -21,6 +21,7 @@ object WordleSolutionRoutes {
           .flatMap { wordleConstraintsRequest =>
             wordleSolver.possibleSolutions(
               wordleConstraintsRequest.length,
+              wordleConstraintsRequest.limit.getOrElse(WordleConstraintsRequest.DefaultResultsCount),
               wordleConstraintsRequest.excludedLetters.getOrElse(Set.empty),
               wordleConstraintsRequest.notInPosition.getOrElse(Map.empty),
               wordleConstraintsRequest.inPosition.getOrElse(Map.empty)
