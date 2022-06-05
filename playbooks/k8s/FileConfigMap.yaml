@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: wordle-solver-file-config-map
+  name: wordle-solver-api-file-config-map
   namespace: {{ namespace }}
 data:
   logback.xml: |

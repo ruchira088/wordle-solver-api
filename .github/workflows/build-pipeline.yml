@@ -1,4 +1,4 @@
-name: wordle-solver-build-pipeline
+name: wordle-solver-api-build-pipeline
 
 on: [push, pull_request]
 

@@ -12,23 +12,24 @@ class LocalWordSource[F[_]: Sync] extends WordSource[F] {
 
   override def words(key: String): Stream[F, String] =
     Stream
-      .resource {
-        Resource.make(
-          Sync[F]
-            .blocking(getClass.getClassLoader.getResourceAsStream(key))
-            .flatMap(
-              inputStream =>
-                if (inputStream == null)
-                  ApplicativeError[F, Throwable]
-                    .raiseError[InputStream](ResourceNotFoundException(s"Unable to find resource named $key"))
-                else Applicative[F].pure(inputStream)
-            )
-        ) { inputStream =>
-          Sync[F].blocking(inputStream.close())
-        }
-      }
-      .flatMap { inputStream =>
-        Stream.eval(Sync[F].blocking(inputStream.readAllBytes()))
+      .eval {
+        Resource
+          .make(
+            Sync[F]
+              .blocking(getClass.getClassLoader.getResourceAsStream(key))
+              .flatMap(
+                inputStream =>
+                  if (inputStream == null)
+                    ApplicativeError[F, Throwable]
+                      .raiseError[InputStream](ResourceNotFoundException(s"Unable to find resource named $key"))
+                  else Applicative[F].pure(inputStream)
+              )
+          ) { inputStream =>
+            Sync[F].blocking(inputStream.close())
+          }
+          .use { inputStream =>
+            Sync[F].blocking(inputStream.readAllBytes())
+          }
       }
       .flatMap(byteArray => Stream.emits(byteArray))
       .through(text.utf8.decode)

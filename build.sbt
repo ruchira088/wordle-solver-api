@@ -13,7 +13,7 @@ lazy val root =
   (project in file("."))
     .enablePlugins(BuildInfoPlugin, JavaAppPackaging)
     .settings(
-      name := "wordle-solver",
+      name := "wordle-solver-api",
       organization := "com.ruchij",
       scalaVersion := Dependencies.ScalaVersion,
       maintainer := "me@ruchij.com",

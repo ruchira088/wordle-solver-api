@@ -4,4 +4,4 @@
 
   tasks:
     - name: Remove created Docker images
-      shell: docker images | grep "wordle-solver" | awk '{print $3}' | xargs docker rmi -f
+      shell: docker images | grep "wordle-solver-api" | awk '{print $3}' | xargs docker rmi -f

@@ -1,6 +1,6 @@
 - name: Print start message
   debug:
-    msg: Started building wordle-solver
+    msg: Started building wordle-solver-api
 
 - name: Create output directory
   file:
@@ -24,9 +24,9 @@
   shell: |
     docker build \
       -f docker-output/Dockerfile \
-      -t wordle-solver:latest \
-      -t wordle-solver:{{ git_branch }}-{{ git_commit }} \
-      -t wordle-solver:{{ git_branch }}-{{ ansible_date_time.iso8601_basic_short }} \
+      -t wordle-solver-api:latest \
+      -t wordle-solver-api:{{ git_branch }}-{{ git_commit }} \
+      -t wordle-solver-api:{{ git_branch }}-{{ ansible_date_time.iso8601_basic_short }} \
       ../target/universal/
 
 - name: Clean up output directory
@@ -36,4 +36,4 @@
 
 - name: Print finish message
   debug:
-    msg: Completed building wordle-solver
+    msg: Completed building wordle-solver-api

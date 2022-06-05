@@ -3,5 +3,5 @@ kind: Namespace
 metadata:
   name: {{ namespace }}
   labels:
-    project: wordle-solver
+    project: wordle-solver-api
     branch: {{ git_branch }}

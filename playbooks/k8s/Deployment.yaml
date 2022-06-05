@@ -1,28 +1,28 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: wordle-solver-deployment
+  name: wordle-solver-api-deployment
   namespace: {{ namespace }}
 spec:
   selector:
     matchLabels:
-      app: wordle-solver
+      app: wordle-solver-api
       branch: {{ git_branch }}
   replicas: 1
   template:
     metadata:
       labels:
-        app: wordle-solver
+        app: wordle-solver-api
         branch: {{ git_branch }}
     spec:
       containers:
-        - name: wordle-solver-container
-          image: ruchira088/wordle-solver:{{ git_branch }}-{{ git_commit }}
+        - name: wordle-solver-api-container
+          image: ruchira088/wordle-solver-api:{{ git_branch }}-{{ git_commit }}
           envFrom:
             - configMapRef:
-                name: wordle-solver-data-config-map
+                name: wordle-solver-api-data-config-map
             - secretRef:
-                name: wordle-solver-secrets
+                name: wordle-solver-api-secrets
           readinessProbe:
             httpGet:
               port: http4s-port
@@ -55,5 +55,5 @@ spec:
       volumes:
         - name: file-config-map
           configMap:
-            name: wordle-solver-file-config-map
+            name: wordle-solver-api-file-config-map
 

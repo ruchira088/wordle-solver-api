@@ -13,6 +13,11 @@ class ServiceConfigurationSpec extends AnyFlatSpec with Matchers {
     val configObjectSource =
       ConfigSource.string {
         s"""
+          word-source-configuration {
+            key = "words.txt"
+            key = $${?WORD_SOURCE_KEY}
+          }
+
           http-configuration {
             host = "127.0.0.1"
             host = $${?HTTP_HOST}
@@ -37,6 +42,7 @@ class ServiceConfigurationSpec extends AnyFlatSpec with Matchers {
           serviceConfiguration.httpConfiguration mustBe HttpConfiguration("127.0.0.1", 80)
           serviceConfiguration.buildInformation mustBe
             BuildInformation(Some("my-branch"), None, Some(new DateTime(2021, 7, 31, 10, 10, 0, 0, DateTimeZone.UTC)))
+          serviceConfiguration.wordSourceConfiguration mustBe WordSourceConfiguration("words.txt")
         }
     }
   }

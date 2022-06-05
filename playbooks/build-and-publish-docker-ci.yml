@@ -9,8 +9,8 @@
     - name: Build Docker CI image
       shell: |
         docker build \
-          -t wordle-solver-ci:latest \
-          -t wordle-solver-ci:{{ git_commit }} \
+          -t wordle-solver-api-ci:latest \
+          -t wordle-solver-api-ci:{{ git_commit }} \
           -f ../.circleci/Dockerfile .
 
     - name: Login to Docker Hub
@@ -21,9 +21,9 @@
 
     - name: Publish Docker image
       shell: |
-        docker tag wordle-solver-ci:{{ git_commit }} ruchira088/docker-ci:wordle-solver-{{ date }} && \
-        docker tag wordle-solver-ci:{{ git_commit }} ruchira088/docker-ci:wordle-solver && \
-        docker push ruchira088/docker-ci:wordle-solver-{{ date }} && \
-        docker push ruchira088/docker-ci:wordle-solver
+        docker tag wordle-solver-api-ci:{{ git_commit }} ruchira088/docker-ci:wordle-solver-api-{{ date }} && \
+        docker tag wordle-solver-api-ci:{{ git_commit }} ruchira088/docker-ci:wordle-solver-api && \
+        docker push ruchira088/docker-ci:wordle-solver-api-{{ date }} && \
+        docker push ruchira088/docker-ci:wordle-solver-api
       vars:
         date: "{{ ansible_date_time.date }}"
