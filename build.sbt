@@ -30,8 +30,8 @@ lazy val root =
 lazy val rootDependencies =
   Seq(
     http4sDsl,
-    http4sBlazeServer,
-    http4sBlazeClient,
+    http4sEmberServer,
+    http4sEmberClient,
     http4sCirce,
     circeGeneric,
     circeParser,

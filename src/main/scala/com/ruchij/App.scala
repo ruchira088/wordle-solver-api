@@ -8,7 +8,7 @@ import com.ruchij.services.solver.{LocalWordleSolver, WordleSolver}
 import com.ruchij.services.words.{LocalWordSource, WordSource}
 import com.ruchij.web.Routes
 import org.http4s.HttpApp
-import org.http4s.blaze.server.BlazeServerBuilder
+import org.http4s.ember.server.EmberServerBuilder
 import pureconfig.ConfigSource
 
 object App extends IOApp {
@@ -23,12 +23,14 @@ object App extends IOApp {
 
       httpApp <- httpApplication(wordSource, healthService, serviceConfiguration)
 
-      exitCode <- BlazeServerBuilder[IO]
-        .withHttpApp(httpApp)
-        .bindHttp(serviceConfiguration.httpConfiguration.port, serviceConfiguration.httpConfiguration.host)
-        .serve
-        .compile
-        .lastOrError
+      exitCode <-
+        EmberServerBuilder.default[IO]
+          .withHttpApp(httpApp)
+          .withHost(serviceConfiguration.httpConfiguration.host)
+          .withPort(serviceConfiguration.httpConfiguration.port)
+          .build
+          .use(_ => IO.never)
+          .as(ExitCode.Success)
 
     } yield exitCode
 
