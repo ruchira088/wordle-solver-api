@@ -2,9 +2,9 @@ import sbt._
 
 object Dependencies
 {
-  val ScalaVersion = "2.13.8"
-  val Http4sVersion = "0.23.14"
-  val CirceVersion = "0.14.2"
+  val ScalaVersion = "2.13.10"
+  val Http4sVersion = "0.23.16"
+  val CirceVersion = "0.14.3"
 
   lazy val http4sDsl = "org.http4s" %% "http4s-dsl" % Http4sVersion
 
@@ -20,11 +20,11 @@ object Dependencies
 
   lazy val circeLiteral = "io.circe" %% "circe-literal" % CirceVersion
 
-  lazy val jodaTime = "joda-time" % "joda-time" % "2.10.14"
+  lazy val jodaTime = "joda-time" % "joda-time" % "2.12.2"
 
-  lazy val pureconfig = "com.github.pureconfig" %% "pureconfig" % "0.17.1"
+  lazy val pureconfig = "com.github.pureconfig" %% "pureconfig" % "0.17.2"
 
-  lazy val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.2.11"
+  lazy val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.4.5"
 
   lazy val scalaLogging = "com.typesafe.scala-logging" %% "scala-logging" % "3.9.5"
 
@@ -32,7 +32,7 @@ object Dependencies
 
   lazy val betterMonadicFor = "com.olegpy" %% "better-monadic-for" % "0.3.1"
 
-  lazy val scalaTest = "org.scalatest" %% "scalatest" % "3.2.13"
+  lazy val scalaTest = "org.scalatest" %% "scalatest" % "3.2.14"
 
   lazy val scalaMock = "org.scalamock" %% "scalamock" % "5.2.0"
 
