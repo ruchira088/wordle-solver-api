@@ -2,9 +2,9 @@ import sbt._
 
 object Dependencies
 {
-  val ScalaVersion = "2.13.11"
-  val Http4sVersion = "0.23.19"
-  val CirceVersion = "0.14.5"
+  val ScalaVersion = "2.13.12"
+  val Http4sVersion = "0.23.23"
+  val CirceVersion = "0.14.6"
 
   lazy val http4sDsl = "org.http4s" %% "http4s-dsl" % Http4sVersion
 
@@ -24,7 +24,7 @@ object Dependencies
 
   lazy val pureconfig = "com.github.pureconfig" %% "pureconfig" % "0.17.4"
 
-  lazy val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.4.7"
+  lazy val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.4.11"
 
   lazy val scalaLogging = "com.typesafe.scala-logging" %% "scala-logging" % "3.9.5"
 
@@ -32,7 +32,7 @@ object Dependencies
 
   lazy val betterMonadicFor = "com.olegpy" %% "better-monadic-for" % "0.3.1"
 
-  lazy val scalaTest = "org.scalatest" %% "scalatest" % "3.2.16"
+  lazy val scalaTest = "org.scalatest" %% "scalatest" % "3.2.17"
 
   lazy val scalaMock = "org.scalamock" %% "scalamock" % "5.2.0"
 
