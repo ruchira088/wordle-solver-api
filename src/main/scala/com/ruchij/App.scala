@@ -7,6 +7,7 @@ import com.ruchij.services.health.{HealthService, HealthServiceImpl}
 import com.ruchij.services.solver.{LocalWordleSolver, WordleSolver}
 import com.ruchij.services.words.{LocalWordSource, WordSource}
 import com.ruchij.web.Routes
+import fs2.compression.Compression
 import org.http4s.HttpApp
 import org.http4s.ember.server.EmberServerBuilder
 import pureconfig.ConfigSource
@@ -34,7 +35,7 @@ object App extends IOApp {
 
     } yield exitCode
 
-  def httpApplication[F[_]: Async](
+  def httpApplication[F[_]: Async: Compression](
     wordSource: WordSource[F],
     healthService: HealthService[F],
     serviceConfiguration: ServiceConfiguration
